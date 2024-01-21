@@ -1,0 +1,29 @@
+[project]
+name = "pysn1"
+version = "0.1.0"
+authors = [{name = "Arthur Zopellaro", email = "github@zope.me"}]
+description = "Python ASN.1 implementation for IEC 61850"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+  "ruff>=0.1.14",
+  "mypy>=1.8.0",
+  "pytest>=7.4.4",
+]
+
+[tool.ruff]
+select = [
+    "F", "E", "W", "C90", "I", "N", "D", "UP", "YTT", "ANN", "ASYNC", "S", "BLE", "FBT", "B", "A", "COM", "C4", "DTZ",
+    "T10", "DJ", "EM", "EXE", "FA", "ISC", "ICN", "G", "INP", "PIE", "T20", "PYI", "PT", "Q", "RSE", "RET", "SLF",
+    "SLOT", "SIM", "TID", "TCH", "INT", "ARG", "PTH", "TD", "FIX", "ERA", "PD", "PGH", "PL", "TRY", "FLY", "NPY", "AIR",
+    "PERF", "RUF",
+]
+ignore = ["D203", "D213", "FA102"]
+extend-ignore = ["D", "TD"]
+line-length = 120
+
+[tool.mypy]
+exclude = ["build", "venv", ".venv"]
