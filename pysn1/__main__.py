@@ -1,9 +1,9 @@
 import logging
 
-from pysn1.identifier import Identifier
+from pysn1.debugger import Identifier
 
 logging.basicConfig(format="", level=logging.INFO)
 logger = logging.getLogger(__package__)
 
-identifier = Identifier(0b0010_0001)
-logger.info(identifier.debug())
+identifier = Identifier.from_bytes(b"\x01")
+logger.info(str(identifier))
