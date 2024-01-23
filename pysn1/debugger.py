@@ -72,7 +72,7 @@ class PrimitiveType(Enum):
 
 
 @dataclass(frozen=True, kw_only=True, slots=True)
-class SpecificType:  # TODO theres probably a better way to do this
+class SpecificType:  # TODO theres probably a better way to do this, PrimitiveType x SpecificType
     value: int
 
     def __repr__(self: "SpecificType") -> str:
@@ -108,7 +108,7 @@ class Identifier:
         constructed = bool(integer >> 5 & 0b1)  # 0b0010_0000
 
         # 0b0001_1111
-        datatype: TypeProtocol  # TODO fix protocol
+        datatype: TypeProtocol
         match ref.value:
             case IdentifierClass.APPLICATION.value:
                 datatype = ApplicationType(value=integer & 0x1F)
