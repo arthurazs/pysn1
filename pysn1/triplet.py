@@ -117,20 +117,20 @@ class Triplet:
         length, extended_length = cls._find_length(unpack("!B", bytestring[1:2])[0], bytestring[2:6])
 
         # value comes after tag (pos 0) and length (pos 1) and extended_length (possibly pos 2+)
-        value = bytestring[2 + extended_length:]
+        start = 2 + extended_length
+        end = start + length
+        value = bytestring[start:end]
 
         if length > len(value):
             msg = f"Triplet length is {length}, but value contains only {len(value)} bytes"
             raise TripletMissingBytesError(msg)
-        if length < len(value):
-            msg = f"Triplet length is {length}, but value contains {len(value)} bytes"
-            raise TripletTooManyBytesError(msg)
 
         return Triplet(tag=tag, length=length, value=value)
 
     def debug(self: "Triplet") -> str:
         string = repr(self) + "\n"
-        string += f"{self.tag=}, {self.length=}: {self.value}\n"
+        string += f"{self.tag=:#04x}, {self.length=:#04x}\n"
+        string += f"{self.tag=}, {self.length=}: {self.value!r}\n"
         string += f"{len(self)=}\n"
         string += f"{bytes(self)=}"
         return string

@@ -51,6 +51,16 @@ class TestTripletFromBytes:
         assert len(triplet) == 0xFF + 1 + 4
         assert bytes(triplet) == bytestring
 
+    def test_from_bytes_too_many_bytes(self: "TestTripletFromBytes") -> None:
+        value = b"\x00"
+        bytestring = b"\x81\x01" + value + b"\x01"
+        triplet = t.Triplet.from_bytes(bytestring)
+        assert triplet.tag == 0x81
+        assert triplet.length == 1
+        assert triplet.value == value
+        assert len(triplet) == 3
+        assert bytes(triplet) == bytestring[:-1]
+
     @pytest.mark.skip(reason="too slow")
     def test_from_bytes_too_big(self: "TestTripletFromBytes") -> None:
         with pytest.raises(t.TripletLengthTooBigError) as exc_info:
@@ -63,11 +73,6 @@ class TestTripletFromBytes:
         with pytest.raises(t.TripletBadLengthError) as exc_info:
             t.Triplet.from_bytes(b"\x81\x81\x01\x01")
         assert exc_info.match(r"Triplet contains extended length, but extended length is less than 128 \(0x80\)")
-
-    def test_from_bytes_too_many_bytes(self: "TestTripletFromBytes") -> None:
-        with pytest.raises(t.TripletTooManyBytesError) as exc_info:
-            t.Triplet.from_bytes(b"\x81\x01\x00\x01")
-        assert exc_info.match("Triplet length is 1, but value contains 2 bytes")
 
     def test_from_bytes_missing_bytes_none(self: "TestTripletFromBytes") -> None:
         with pytest.raises(t.TripletMissingBytesError) as exc_info:

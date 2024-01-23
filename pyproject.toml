@@ -1,6 +1,6 @@
 [project]
 name = "pysn1"
-version = "0.1.1"
+version = "0.1.2"
 authors = [{name = "Arthur Zopellaro", email = "github@zope.me"}]
 description = "Python ASN.1 implementation for IEC 61850"
 readme = "README.md"
