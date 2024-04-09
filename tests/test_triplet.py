@@ -1,6 +1,19 @@
 import pytest
+
 from pysn1 import triplet as t
 
+DEFAULT_TAG = 0x81
+
+
+class TestTripletBuild:
+    def test_correct_creation(self: "TestTripletBuild") -> None:
+        value = b"pysn1"
+        triplet = t.Triplet.build(tag=DEFAULT_TAG, value=value)
+        assert triplet.tag == DEFAULT_TAG
+        assert triplet.length == len(value)
+        assert triplet.value == value
+        assert len(triplet) == len(value) + 2
+        assert bytes(triplet) == b"\x81\x05pysn1"
 
 class TestTripletFromBytes:
     def test_from_bytes(self: "TestTripletFromBytes") -> None:

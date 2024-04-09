@@ -5,3 +5,6 @@ build
 
 # PyCharm
 .idea
+
+# venv
+.venv

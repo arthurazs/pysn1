@@ -64,6 +64,10 @@ class Triplet:
         # tag field + len field + value field len + extended length
         return 1 + 1 + len(self.value) + self._extended_length()
 
+    @classmethod
+    def build(cls: type["Triplet"], tag: int, value: bytes) -> "Triplet":
+        return cls(tag=tag, length=len(value), value=value)
+
     def __bytes__(self: "Triplet") -> bytes:
         tag = pack("!B", self.tag)
         extended_length = self._extended_length()
